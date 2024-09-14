@@ -1,6 +1,7 @@
 import uuid
+import datetime
 from flask import Blueprint, current_app, render_template, session, redirect, request, url_for
-from movie_library.forms import MovieForm
+from movie_library.forms import MovieForm, ExendedMovieForm
 from movie_library.models import Movie
 from dataclasses import asdict
 
@@ -35,7 +36,7 @@ def add_movie():
 
         current_app.db.movie.insert_one(asdict(movie))
 
-        return redirect(url_for(".index"))
+        return redirect(url_for(".movie", _id=movie._id))
 
     return render_template(
         "new_movie.html",
@@ -44,11 +45,44 @@ def add_movie():
     )
 
 
+@pages.route("/edit/<string:_id>", methods=["GET", "POST"])
+def edit_movie(_id: str):
+    movie = Movie(**current_app.db.movie.find_one({"_id": _id}))
+    form = ExendedMovieForm(obj=movie)
+    if form.validate_on_submit():
+        movie.title = form.title.data
+        movie.director = form.director.data
+        movie.year = form.year.data
+        movie.cast = form.cast.data
+        movie.series = form.series.data
+        movie.tags = form.tags.data
+        movie.description = form.description.data
+        movie.video_link = form.video_link.data
+        
+        current_app.db.movie.update_one({"_id": movie._id}, {"$set": asdict(movie)})
+        return redirect(url_for(".movie", _id=movie._id))
+    return render_template("movie_form.html", movie=movie, form=form)
+
+
 @pages.get("/movie/<string:_id>")
 def movie(_id: str):
     movie = Movie(**current_app.db.movie.find_one({"_id": _id}))
     return render_template("movie_details.html", movie=movie)
 
+
+@pages.get("/movie/<string:_id>/rate")
+def rate_movie(_id):
+    rating = int(request.args.get("rating"))
+    current_app.db.movie.update_one({"_id": _id}, {"$set": {"rating": rating}})
+
+    return redirect(url_for(".movie", _id=_id))
+
+
+@pages.get("/movie/<string:_id>/watch")
+def watch_today(_id):
+    current_app.db.movie.update_one({"_id": _id}, {"$set": {"last_watched": datetime.datetime.today()}})
+    
+    return redirect(url_for(".movie", _id=_id))
 
 @pages.get("/toggle-them")
 def toggle_theme():
