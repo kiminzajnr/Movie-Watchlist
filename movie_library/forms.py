@@ -14,6 +14,7 @@ class MovieForm(FlaskForm):
             InputRequired(), NumberRange(min=1878, message="Please enter a year in the format YYYY.")
             ]
         )
+    img_url = StringField("Image Url", default="img/movie_img.webp")
 
     submit = SubmitField("Add Movie")
 
