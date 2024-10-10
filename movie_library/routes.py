@@ -119,6 +119,7 @@ def add_movie():
             _id=uuid.uuid4().hex,
             title=form.title.data,
             director=form.director.data,
+            img_url=form.img_url.data,
             year=form.year.data
         )
         current_app.db.movie.insert_one(asdict(movie))
@@ -149,6 +150,7 @@ def edit_movie(_id: str):
         movie.tags = form.tags.data
         movie.description = form.description.data
         movie.video_link = form.video_link.data
+        movie.img_url = form.img_url.data
         
         current_app.db.movie.update_one({"_id": movie._id}, {"$set": asdict(movie)})
         return redirect(url_for(".movie", _id=movie._id))
