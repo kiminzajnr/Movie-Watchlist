@@ -8,6 +8,7 @@ class Movie:
     title: str
     director: str
     year: int
+    img_url: str
     cast: list[str] = field(default_factory=list)
     series: list[str] = field(default_factory=list)
     last_watched: datetime = None
