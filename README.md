@@ -20,3 +20,30 @@ The app uses WTForms to manage form creation and validation, ensuring a secure a
 - Last Watched: A "Last Watched" date that updates to the current date on click.
 - Dark/Light Mode Toggle: Users can toggle between light and dark modes, with CSS variables for efficient styling.
 - Responsive Design: Adjusts for mobile, tablet, and desktop viewing using responsive CSS.
+
+## Installation
+1. Clone the repository:
+```
+git clone [text](https://github.com/kiminzajnr/Movie-Watchlist.git)
+cd Movie-Watchlist
+```
+2. Set up a virtual environment:
+```
+python3 -m venv venv
+source venv/bin/activate   # On Windows use 'venv\Scripts\activate'
+```
+3. Install dependencies:
+```
+pip install -r requirements.txt
+```
+4. Configure environment variables:
+- Add MongoDB URI and secret key to a .env file.
+- Set up .flaskenv with:
+```
+FLASK_APP=movie_library
+FLASK_ENV=development
+```
+5. Run the application:
+```
+flask run
+```
