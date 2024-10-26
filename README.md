@@ -52,3 +52,11 @@ flask run
 - User Signup and Login: Use the signup form to create an account with a password which will be securely hashed and stored.
 - Adding Movies: Add new movies with a title, director, and year, and edit them to add more details like cast and rating.
 - Toggle Dark Mode: Click the toggle in the navbar to switch between light and dark modes.
+
+## Technologies
+- Flask
+- WTForms
+- MongoDB
+- CSS 
+- HTML
+- Gunicorn
