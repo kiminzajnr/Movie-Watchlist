@@ -10,4 +10,5 @@ This project is a movie watchlist application that enables users to:
 - Switch between light and dark modes.
 - Sign up and log in securely using hashed passwords.
 - Optionally enhance their experience with features such as user comments or public profiles.  
+
 The app uses WTForms to manage form creation and validation, ensuring a secure and robust user experience.
